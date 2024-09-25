@@ -19,7 +19,30 @@ public class Production {
         // singleton2 не отработает, т.к. наш метод getSingleton() проверяет ссылку на NULL.
         // Если не NULL то вернется ссылка ранее созданая.
 
+        Thread thread_1 = new Thread(new OneClass());
+        Thread thread_2 = new Thread(new TwoClass());
 
+        thread_1.start();
+        thread_2.start();
+
+    }
+
+    /* Singleton для многопоточки */
+
+    static class OneClass implements Runnable {
+        @Override
+        public void run() {
+           Singleton_stream singleton_stream_1 = Singleton_stream.getInstance(1, 25);
+           System.out.println(singleton_stream_1.getId() + " " + singleton_stream_1.getAge());
+        }
+    }
+
+    static class TwoClass implements Runnable {
+        @Override
+        public void run() {
+            Singleton_stream singleton_stream_2 = Singleton_stream.getInstance(100, 99);
+            System.out.println(singleton_stream_2.getId() + " " + singleton_stream_2.getAge());
+        }
     }
 
 }
